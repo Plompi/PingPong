@@ -1,1 +1,1 @@
-# PingPong
+# PingPong in Pygame
