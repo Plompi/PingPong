@@ -21,6 +21,9 @@ class colorschemes:
                     
         )
 
+    def hex_to_rgb(self,hexcolor):
+        return tuple(int(hexcolor[1:][i:i+2], 16) for i in (0, 2, 4))
+
     def setactivecolor(self,index):
         with open('selected_scheme.json','w') as theme:
             json.dump(self.__colors[index],theme)

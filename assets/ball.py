@@ -11,6 +11,7 @@ class Ball:
         self.__timer = pygame.time.get_ticks()
         self.__win = win
         self.__ball = pygame.Rect(self.__x, self.__y, 32, 32)
+        self.__color = self.__scheme.hex_to_rgb(self.__scheme.loadactivecolor()[4])
 
     def changePosition(self,player1,player2):
         self.__player1Rect,self.__player2Rect = player1.getRect(),player2.getRect()
@@ -43,7 +44,6 @@ class Ball:
         self.__x += self.__speedx
         self.__y += self.__speedy
         self.__ball = pygame.Rect(self.__x,self.__y, 32, 32)
-        self.__color = tuple(int(self.__scheme.loadactivecolor()[4][1:][i:i+2], 16) for i in (0, 2, 4))
         pygame.gfxdraw.aacircle(self.__win, int(self.__x)+16 ,int(self.__y)+16, 16, self.__color)
         pygame.gfxdraw.filled_circle(self.__win, int(self.__x)+16, int(self.__y)+16, 16, self.__color)
 
@@ -51,7 +51,7 @@ class Ball:
         return self.__speedx
 
     def reset(self):
-        self.__speedx,self.__speedy = 2*choice([1,-1]),2*choice([1,-1])
+        self.__speedx,self.__speedy = choice([2,-2]),choice([2,-2])
 
     def restart(self):
         self.__timer = pygame.time.get_ticks()

@@ -15,7 +15,7 @@ class Fenster:
         self.__player1 = Spieler((20, self.__win.get_height()/2-(30/2)),self.__win,self.__scheme)
         self.__player2 = Spieler((self.__win.get_width()-20-5, self.__win.get_height()/2-(30/2)),self.__win,self.__scheme)
         self.__ball = Ball((self.__win.get_width()/2-16,self.__win.get_height()/2-16),self.__win,self.__scheme)
-        self.__font = pygame.font.SysFont('freesansbold.ttf',50)
+        self.__font = pygame.font.SysFont(None,50)
 
         while True:
             if self.__pause == False:
@@ -40,8 +40,8 @@ class Fenster:
                 self.__player1.changePosition()
                 self.__player2.changePosition()
                 self.__ball.changePosition(self.__player1,self.__player2)
-                self.__score1 = self.__font.render(str(self.__player1.getPoints()),True,self.__color[2])
-                self.__score2 = self.__font.render(str(self.__player2.getPoints()),True,self.__color[2])
+                self.__score1 = self.__font.render(f"{self.__player1.getPoints()}",True,self.__color[2])
+                self.__score2 = self.__font.render(f"{self.__player2.getPoints()}",True,self.__color[2])
                 self.__win.blits([(self.__score1,(self.__win.get_width()/2-50-self.__score1.get_width(),self.__win.get_height()/2-self.__score1.get_height()/2)),
                                 (self.__score2,(self.__win.get_width()/2+50,self.__win.get_height()/2-self.__score2.get_height()/2))])
                 
@@ -50,7 +50,7 @@ class Fenster:
                     if self.__player2.getPoints() == 7:
                         self.__winner = 2
 
-                    if Gameover(self.__scheme,self.__win,'PLAYER '+str(self.__winner),self.__menu):
+                    if Gameover(self.__scheme,self.__win,f'PLAYER {self.__winner}',self.__menu):
                         self.__ball.restart()
                         self.__player1.restart()
                         self.__player2.restart()

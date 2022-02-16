@@ -7,17 +7,16 @@ class Gameover:
         self.__menu = menu
         self.__winner = winner
         self.__scheme = scheme
-        self.__color = self.__scheme.loadactivecolor()
+        self.__color = self.__scheme.loadactivecolor()[1]
         self.__win = win
         self.__clock = pygame.time.Clock()
         self.__selected = 1
         self.__buttons = [
-            Button(str(self.__winner)+' WON!',100,(self.__win.get_width()/2,self.__win.get_height()/2-300),self.__scheme,self.__win),
-            Button('RESTART',100,(self.__win.get_width()/2,self.__win.get_height()/2-80),self.__scheme,self.__win),
-            Button('MENU',100,(self.__win.get_width()/2,self.__win.get_height()/2),self.__scheme,self.__win),
-            Button('QUIT',100,(self.__win.get_width()/2,self.__win.get_height()/2+80),self.__scheme,self.__win)
+            Button(f'{self.__winner} WON!',100,(self.__win.get_width()/2,self.__win.get_height()/2-300),self.__scheme,self.__win,1),
+            Button('RESTART',100,(self.__win.get_width()/2,self.__win.get_height()/2-80),self.__scheme,self.__win,-1),
+            Button('MENU',100,(self.__win.get_width()/2,self.__win.get_height()/2),self.__scheme,self.__win,1),
+            Button('QUIT',100,(self.__win.get_width()/2,self.__win.get_height()/2+80),self.__scheme,self.__win,1)
         ]
-        self.__buttons[self.__selected].setSelected(True)
 
         while True:
             for event in pygame.event.get():
@@ -27,13 +26,13 @@ class Gameover:
 
                 if event.type == pygame.KEYDOWN:
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.__selected != 1:
-                                self.__buttons[self.__selected-1].setSelected(True)
-                                self.__buttons[self.__selected].setSelected(False)
+                                self.__buttons[self.__selected-1].setSelected()
+                                self.__buttons[self.__selected].setSelected()
                                 self.__selected -=1
 
                     if (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self.__selected != 3:
-                                self.__buttons[self.__selected+1].setSelected(True)
-                                self.__buttons[self.__selected].setSelected(False)
+                                self.__buttons[self.__selected+1].setSelected()
+                                self.__buttons[self.__selected].setSelected()
                                 self.__selected +=1
 
                     if event.key == pygame.K_RETURN:
@@ -47,7 +46,7 @@ class Gameover:
                             pygame.quit()
                             sys.exit()
 
-            self.__win.fill(self.__color[1])
+            self.__win.fill(self.__color)
 
             for i in self.__buttons:
                 i.draw()
