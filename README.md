@@ -1,1 +1,1 @@
-<img src="https://github.com/Plompi/PingPong/blob/main/assets/Pong.png">
+<img src="https://github.com/Plompi/PingPong/blob/main/assets/img/Pong.png">

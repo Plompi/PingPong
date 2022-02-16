@@ -5,7 +5,7 @@ def resource_path(relative_path):
         if hasattr(sys, '_MEIPASS'):
             return path.join(sys._MEIPASS, relative_path)
         return path.join(path.abspath('.'), relative_path)
-sys.path.append(resource_path('assets/'))
+sys.path.append(resource_path('assets/scripts/'))
 
 from button import *
 from main import *
@@ -18,7 +18,7 @@ class Menu:
     def __init__(self):
         pygame.init()
         pygame.display.set_caption('PingPong')
-        pygame.display.set_icon(pygame.image.load(resource_path("assets/icon.png")))
+        pygame.display.set_icon(pygame.image.load(resource_path("assets/img/icon.png")))
         self.__scheme = colorschemes()
         self.__color = self.__scheme.loadactivecolor()
         self.__win = pygame.display.set_mode((933,700))
