@@ -9,7 +9,7 @@ class Spieler:
         self.__color = self.__scheme.loadactivecolor()[3]
         self.__speed = 4
         self.__player = pygame.Rect(self.__x, self.__y, 5, 100)
-        self.__Input = (False,False) #top,bottom
+        self.__Input = (False,False) #up,down
         self.__Points = 0
 
     def changePosition(self):

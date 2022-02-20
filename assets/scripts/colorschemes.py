@@ -38,8 +38,5 @@ class colorschemes:
                 json.dump(self.__colors[0],theme)
             return self.__colors[0]
 
-    def indexofcolor(self,color):
-        return self.__colors.index(color)
-
-    def allcolors(self):
-        return self.__colors
+    def indexofcolor(self,color): #in relation to total length of colorlist
+        return self.__colors.index(color), len(self.__colors)

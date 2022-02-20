@@ -49,22 +49,18 @@ class Menu:
                                 self.__selected +=1
 
                     if self.__selected == 2:
-                        if (event.key == pygame.K_d or event.key == pygame.K_RIGHT):
+                        if (event.key == pygame.K_d or event.key == pygame.K_RIGHT) or (event.key == pygame.K_a or event.key == pygame.K_LEFT):
+                            self.__direction = 1
+                            if (event.key == pygame.K_a or event.key == pygame.K_LEFT):
+                                self.__direction = -1
                             self.__index = self.__scheme.indexofcolor(self.__scheme.loadactivecolor())
-                            if self.__index +1 >= len(self.__scheme.allcolors()):
+                            if self.__index[0]+self.__direction == self.__index[1]:
                                 self.__scheme.setactivecolor(0)
                             else:
-                                self.__scheme.setactivecolor(self.__index+1)
-                        
-                        if (event.key == pygame.K_a or event.key == pygame.K_LEFT):
-                            self.__index = self.__scheme.indexofcolor(self.__scheme.loadactivecolor())
-                            if self.__index -1 < 0:
-                                self.__scheme.setactivecolor(len(self.__scheme.allcolors())-1)
-                            else:
-                                self.__scheme.setactivecolor(self.__index-1)
-                        self.__color = self.__scheme.loadactivecolor()
-                        for i in self.__buttons:
-                            i.change_color()
+                                self.__scheme.setactivecolor(self.__index[0]+self.__direction)
+                            self.__color = self.__scheme.loadactivecolor()
+                            for i in self.__buttons:
+                                i.change_color()
 
 
                     if event.key == pygame.K_RETURN:
