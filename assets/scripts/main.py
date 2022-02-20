@@ -57,18 +57,14 @@ class Fenster:
 
                 if self.__ball.getSpeed() == 0:
                     self.__timer = pygame.time.get_ticks()
-                    if self.__timer -  self.__ball.getTimer() > 2100:
-                        self.__timer = pygame.time.get_ticks()
-                        self.__ball.reset()
-                    if self.__timer -  self.__ball.getTimer() < 700:
-                        self.__counter = self.__font.render('3',True,self.__color[3])
+
+                    if self.__timer - self.__ball.getTimer() < 2100:
+                        self.__counter_num = (((self.__timer - self.__ball.getTimer()) // 700)-3)*-1
+                        self.__counter = self.__font.render(f'{self.__counter_num}',True,self.__color[3])
                         self.__win.blit(self.__counter,(self.__win.get_width()/2-self.__counter.get_width()/2,self.__win.get_height()/2+40))
-                    if 700 < self.__timer -  self.__ball.getTimer() < 1400:
-                        self.__counter = self.__font.render('2',True,self.__color[3])
-                        self.__win.blit(self.__counter,(self.__win.get_width()/2-self.__counter.get_width()/2,self.__win.get_height()/2+40))
-                    if 1400 < self.__timer -  self.__ball.getTimer() < 2100:
-                        self.__counter = self.__font.render('1',True,self.__color[3])
-                        self.__win.blit(self.__counter,(self.__win.get_width()/2-self.__counter.get_width()/2,self.__win.get_height()/2+40))
+                    else:
+                        self.__ball.start()
+
                 pygame.display.flip()
                 self.__clock.tick(120)
 
