@@ -16,6 +16,11 @@ class Fenster:
         self.__player2 = Spieler((self.__win.get_width()-20-5, self.__win.get_height()/2-(30/2)),self.__win,self.__scheme)
         self.__ball = Ball((self.__win.get_width()/2-16,self.__win.get_height()/2-16),self.__win,self.__scheme)
         self.__font = pygame.font.SysFont(None,50)
+        self.__win_sound = pygame.mixer.Sound("assets/sounds/win.wav")
+        self.__win_sound.set_volume(0.05)
+        pygame.mixer.music.load("assets/sounds/GameMusic.wav")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.1)
 
         while True:
             if self.__pause == False:
@@ -26,6 +31,7 @@ class Fenster:
                         sys.exit()
 
                     if self.__keys[pygame.K_ESCAPE]:
+                        pygame.mixer.music.stop()
                         del self.__player1,self.__player2,self.__ball
                         return
                     if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
@@ -44,11 +50,12 @@ class Fenster:
                 self.__score2 = self.__font.render(f"{self.__player2.getPoints()}",True,self.__color[2])
                 self.__win.blits([(self.__score1,(self.__win.get_width()/2-50-self.__score1.get_width(),self.__win.get_height()/2-self.__score1.get_height()/2)),
                                 (self.__score2,(self.__win.get_width()/2+50,self.__win.get_height()/2-self.__score2.get_height()/2))])
-                
-                if self.__player1.getPoints() == 7 or self.__player2.getPoints() == 7 :
+                self.__p1Points, self.__p2Points = self.__player1.getPoints(),self.__player2.getPoints()
+                if (self.__p1Points >= 11 or self.__p2Points >= 11) and abs(self.__p1Points - self.__p2Points) >=2:
                     self.__winner = 1
-                    if self.__player2.getPoints() == 7:
+                    if self.__p2Points > self.__p1Points:
                         self.__winner = 2
+                    self.__win_sound.play()
 
                     if Gameover(self.__scheme,self.__win,f'PLAYER {self.__winner}',self.__menu):
                         self.__ball.restart()
@@ -76,6 +83,7 @@ class Fenster:
                     if event.type == pygame.KEYDOWN:
 
                         if event.key == pygame.K_ESCAPE:
+                            pygame.mixer.music.fadeout(2000)
                             return
 
                         if event.key == pygame.K_SPACE:

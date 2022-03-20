@@ -12,6 +12,11 @@ class Menu:
         pygame.init()
         pygame.display.set_caption('PingPong')
         pygame.display.set_icon(pygame.image.load("assets/img/icon.png"))
+        self.__button_sound = pygame.mixer.Sound("assets/sounds/button.wav")
+        pygame.mixer.music.load("assets/sounds/menu.wav")
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.1)
+        self.__button_sound.set_volume(0.2)
         self.__scheme = colorschemes()
         self.__color = self.__scheme.loadactivecolor()
         self.__win = pygame.display.set_mode((933,700))
@@ -32,17 +37,20 @@ class Menu:
 
                 if event.type == pygame.KEYDOWN:
                     if (event.key == pygame.K_w or event.key == pygame.K_UP) and self.__selected != 1:
-                                self.__buttons[self.__selected-1].setSelected()
-                                self.__buttons[self.__selected].setSelected()
-                                self.__selected -=1
+                        self.__button_sound.play()
+                        self.__buttons[self.__selected-1].setSelected()
+                        self.__buttons[self.__selected].setSelected()
+                        self.__selected -=1
 
                     if (event.key == pygame.K_s or event.key == pygame.K_DOWN) and self.__selected != 3:
-                                self.__buttons[self.__selected+1].setSelected()
-                                self.__buttons[self.__selected].setSelected()
-                                self.__selected +=1
+                        self.__button_sound.play()
+                        self.__buttons[self.__selected+1].setSelected()
+                        self.__buttons[self.__selected].setSelected()
+                        self.__selected +=1
 
                     if self.__selected == 2:
                         if (event.key == pygame.K_d or event.key == pygame.K_RIGHT) or (event.key == pygame.K_a or event.key == pygame.K_LEFT):
+                            self.__button_sound.play()
                             self.__direction = 1
                             if (event.key == pygame.K_a or event.key == pygame.K_LEFT):
                                 self.__direction = -1
@@ -59,6 +67,8 @@ class Menu:
                     if event.key == pygame.K_RETURN:
                         if self.__selected == 1:
                             Fenster(self.__win,self.__scheme,self)
+                            pygame.mixer.music.load("assets/sounds/menu.wav")
+                            pygame.mixer.music.play(-1)
 
                         if self.__selected == 3:
                             pygame.quit()

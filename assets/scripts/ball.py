@@ -13,10 +13,15 @@ class Ball:
         self.__win = win
         self.__ball = pygame.Rect(self.__x, self.__y, 32, 32)
         self.__color = self.__scheme.hex_to_rgb(self.__scheme.loadactivecolor()[4])
+        self.__ball_sound = pygame.mixer.Sound("assets/sounds/ballhit.wav")
+        self.__score_sound = pygame.mixer.Sound("assets/sounds/score.wav")
+        self.__ball_sound.set_volume(0.2)
+        self.__score_sound.set_volume(0.05)
 
     def changePosition(self,player1,player2):
         self.__player1Rect,self.__player2Rect = player1.getRect(),player2.getRect()
         if self.__ball.left <= 0 or self.__ball.right >= self.__win.get_width():
+            self.__score_sound.play()
             if self.__ball.left <= 0:
                 player2.setPoints()
             else:
@@ -24,9 +29,11 @@ class Ball:
             self.restart()
 
         if self.__ball.top <= 0 or self.__ball.bottom >= self.__win.get_height():
+            self.__ball_sound.play()
             self.__speedy*=-1
 
         if self.__ball.colliderect(self.__player1Rect) or self.__ball.colliderect(self.__player2Rect):
+            self.__ball_sound.play()
             self.__cp = self.__player1Rect
             if self.__ball.colliderect(self.__player2Rect):
                 self.__cp = self.__player2Rect
